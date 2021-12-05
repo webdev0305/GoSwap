@@ -24,6 +24,10 @@ export interface FarmWithStakedValue extends DeserializedFarm {
 const StyledCard = styled(Card)`
   align-self: baseline;
   background: none;
+  max-width: 90%;
+  ${({ theme }) => theme.mediaQueries.sm} {
+    max-width: 31.5%;
+  }
 `
 
 const FarmCardInnerContainer = styled(Flex)`

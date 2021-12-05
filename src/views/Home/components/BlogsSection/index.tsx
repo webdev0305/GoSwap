@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Flex, Heading, CardsLayout } from '@pancakeswap/uikit'
+import { Flex, Heading, CardsLayout, useMatchBreakpoints } from '@pancakeswap/uikit'
 // import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'contexts/Localization'
 // import CompositeImage, { CompositeImageProps } from '../CompositeImage'
@@ -34,10 +34,11 @@ const Card = styled.div`
 
 const BlogsSection: React.FC<BlogsSectionProps> = () => {
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
 
   return (
     <Flex flexDirection="column" alignItems="center">
-      <Heading scale="xxl">{t('WHY GODEX EXCHANGE ?')}</Heading>
+      <Heading scale={isMobile?"lg":"xxl"}>{t('WHY GODEX EXCHANGE ?')}</Heading>
       <span style={{ width:'200px', height:'8px', background:'#1EBF8D', borderRadius:'5px', margin:'10px', marginBottom: '40px' }}/>
       <CardsLayout>
         <Card>

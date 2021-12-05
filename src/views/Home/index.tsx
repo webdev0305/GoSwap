@@ -47,7 +47,7 @@ const StyledHeroSection = styled(PageSection)`
 const StyledTable = styled.table`
   width: 100%;
   font-family: Poppins;
-  font-size: 25px;
+  font-size: 16px;
   color: white;
   line-height: 2.5em;
   th {
@@ -62,6 +62,9 @@ const StyledTable = styled.table`
     div {
       border-radius: 20px;
     }
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 25px;
   }
 `
 const Card = styled.div`
@@ -200,12 +203,12 @@ const Home: React.FC = () => {
         hasCurvedDivider={false}
       >
         <Flex alignItems="center" flexDirection="column">
-          <Heading scale="xxl" mb={30}>Together We Are <span style={{ color: "#1EBF8D" }}>Stronger</span></Heading>
-          <Text fontSize="32px" fontFamily="Poppins" color="#8B95A8">All generated fees from different features will be invested back in POSI and in our Community. Position Exchange’s team will not receive any of the fees! We invest our hard work in the potential value of the token.</Text>
+          <Heading scale={isMobile?"lg":"xxl"} mb={30}>Together We Are <span style={{ color: "#1EBF8D" }}>Stronger</span></Heading>
+          <Text fontSize={isMobile?"20px":"32px"} fontFamily="Poppins" color="#8B95A8">All generated fees from different features will be invested back in GO and in our Community. GO DEX Exchange’s team will not receive any of the fees! We invest our hard work in the potential value of the token.</Text>
         </Flex>
       </PageSection>
       <PageSection
-        innerProps={{ style: { marginBottom: '200px', width: '100%', background: '#273043', borderRadius: '20px', padding: '50px 70px' } }}
+        innerProps={{ style: { marginBottom: '200px', width: '100%', background: '#273043', borderRadius: '20px',}}}
         index={5}
         background="none"
         hasCurvedDivider={false}
@@ -214,8 +217,8 @@ const Home: React.FC = () => {
           <img src="/images/bg-pattern1.png" alt="pattern" style={{ position: 'absolute', right: '50%', marginRight: '180px', bottom: 0, transform: 'scaleY(-1)' }} />
           <img src="/images/bg-pattern1.png" alt="pattern" style={{ position: 'absolute', left: '50%', marginLeft: '180px', bottom: 0, transform: 'scale(-1)' }} />
         </OuterWedgeWrapper>
-        <Flex alignItems="center" flexDirection="column">
-          <Heading scale="xl" mb={30}><span style={{ color: "#1EBF8D" }}>GO</span> Token Details</Heading>
+        <Flex alignItems="center" flexDirection="column" padding={isMobile?"0px":"0px 50px"}>
+          <Heading scale={isMobile?"lg":"xl"} mb={30}><span style={{ color: "#1EBF8D" }}>GO</span> Token Details</Heading>
           <StyledTable>
             <thead>
               <tr>

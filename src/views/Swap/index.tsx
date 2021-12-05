@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Currency, CurrencyAmount, JSBI, Token, Trade } from '@pancakeswap/sdk'
-import { Button, Text, ArrowDownIcon, Box, useModal, Flex } from '@pancakeswap/uikit'
+import { Button, Text, ArrowDownIcon, Box, useModal, Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import TradingViewWidget, { Themes } from 'react-tradingview-widget'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -306,7 +306,11 @@ export default function Swap({ history }: RouteComponentProps) {
       top: 50%;
     }
   `
-
+const Chart = styled.div`
+    article div div{
+      height: 200px;
+    }
+`
   // const PairRate = styled.h2`
   //   color: white;
   //   font-size: 3em;
@@ -319,11 +323,11 @@ export default function Swap({ history }: RouteComponentProps) {
   // `
 
   const [viewStatus, setViewStatus] = React.useState(0)
-
+  const { isMobile } = useMatchBreakpoints()
   return (
     <Page>
-      <Flex justifyContent="space-between">
-        <div style={{padding:'30px',background:'#1A202C',flex:1,display:'flex',flexDirection:'column'}}>
+      <Flex justifyContent="space-between" flexDirection={isMobile?"column":"row"}>
+        <div style={{padding:'30px',background:'#1A202C',display:'flex',flexDirection:'column', width: '100%' }}>
           <PairInfo>
             <span className="token1">
               <CurrencyLogo currency={currencies[Field.INPUT]} size="32px" />
@@ -334,13 +338,13 @@ export default function Swap({ history }: RouteComponentProps) {
             {currencies[Field.INPUT]?.symbol??'?'} / {currencies[Field.OUTPUT]?.symbol??'?'}
           </PairInfo>
           {/* {(currencies[Field.INPUT]?.symbol && currencies[Field.OUTPUT]?.symbol && Boolean(trade)) && <PairRate>{trade?.executionPrice} {currencies[Field.OUTPUT]?.symbol}<small>+227.02545</small></PairRate>} */}
-          <TradingViewWidget
-            symbol="BNBBUSD"
-            theme={Themes.DARK}
-            width="100%"
-          />
+            <TradingViewWidget
+              symbol="BNBBUSD"
+              theme={Themes.DARK}
+              width="100%"
+            />
         </div>
-        <div style={{display:(viewStatus===0?'flex':'none'),flexDirection: 'column',padding: '30px',background: '#1F2533',minWidth: '500px'}}>
+        <div style={{display:(viewStatus===0?'flex':'none'),flexDirection: 'column',padding: '15px',background: '#1F2533', minWidth:(isMobile?'100%':'500px'), minHeight:(isMobile?'500px':'')}} >
           <AppBody>
             <AppHeader title={t('Swap')} subtitle={t('Trade tokens in an instant')} cogHandler={()=>{setViewStatus(1)}}/>
             <Wrapper>
@@ -529,7 +533,7 @@ export default function Swap({ history }: RouteComponentProps) {
             <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
           )}
         </div>
-        <div style={{display:(viewStatus===1?'flex':'none'),flexDirection: 'column',padding: '30px',background: '#1F2533',minWidth: '500px'}}>
+        <div style={{display:(viewStatus===1?'flex':'none'),flexDirection: 'column',padding: '15px',background: '#1F2533',minWidth:(isMobile?'100%':'500px')}}>
           <AppBody>
             <AppHeader title={t('Exchange Settings')} backHandler={()=>{setViewStatus(0)}} noConfig/>
             <Wrapper>
@@ -537,7 +541,7 @@ export default function Swap({ history }: RouteComponentProps) {
             </Wrapper>
           </AppBody>
         </div>
-        <div style={{display:(viewStatus===2 || viewStatus===3?'flex':'none'),flexDirection: 'column',padding: '30px',background: '#1F2533',minWidth: '500px'}}>
+        <div style={{display:(viewStatus===2 || viewStatus===3?'flex':'none'),flexDirection: 'column',padding: '15px',background: '#1F2533',minWidth:(isMobile?'100%':'500px')}}>
           <AppBody>
             <AppHeader title={t('Select a token')} backHandler={()=>{setViewStatus(0)}} noConfig/>
             <Wrapper>
@@ -558,7 +562,7 @@ export default function Swap({ history }: RouteComponentProps) {
             </Wrapper>
           </AppBody>
         </div>
-        <div style={{display:(viewStatus===5?'flex':'none'),flexDirection: 'column',padding: '30px',background: '#1F2533',minWidth: '500px'}}>
+        <div style={{display:(viewStatus===5?'flex':'none'),flexDirection: 'column',padding: '15px',background: '#1F2533',minWidth:(isMobile?'100%':'500px')}}>
           <AppBody>
             <AppHeader title={t('Confirm Order')} backHandler={()=>{setViewStatus(0)}} noConfig/>
             <Wrapper>

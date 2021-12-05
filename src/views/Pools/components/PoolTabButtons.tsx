@@ -8,14 +8,18 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  
   a {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
     margin-left: 16px;
+    a {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
   }
 `
 
@@ -24,7 +28,7 @@ const PoolTabButtons = ({ hasStakeInFinishedPools }) => {
   const { t } = useTranslation()
 
   return <Wrapper>
-    <ButtonMenu activeIndex={isExact ? 0 : 1} scale="md" variant="subtle">
+    <ButtonMenu activeIndex={isExact ? 0 : 1} scale="sm" variant="subtle">
       <ButtonMenuItem as={Link} to={`${url}`}>
         {t('Active')}
       </ButtonMenuItem>

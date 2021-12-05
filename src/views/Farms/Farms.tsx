@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Toggle, Text, Flex } from '@pancakeswap/uikit'
+import { Toggle, Text, Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -35,13 +35,11 @@ const ControlContainer = styled.div`
   width: 100%;
   align-items: center;
   position: relative;
-
+  flex-direction: row;
   justify-content: space-between;
-  flex-direction: column;
   margin-bottom: 32px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
-    flex-direction: row;
     flex-wrap: wrap;
     padding: 16px;
     margin-bottom: 0;
@@ -369,13 +367,13 @@ const Farms: React.FC = () => {
   // const handleSortOptionChange = (option: OptionProps): void => {
   //   setSortOption(option.value)
   // }
-
+  const { isMobile } = useMatchBreakpoints()
   return (
     <>
-      <PageHeader background="#1F2533" borderRadius="0 0 100px 100px">
+      <PageHeader background="#1F2533" borderRadius={isMobile?"0":"0 0 100px 100px"}>
         <Hero />
       </PageHeader>
-      <Page>
+      <Page style={{paddingInline:isMobile?"0px":"10px"}}>
         <ControlContainer>
           <ViewControls>
             <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
@@ -387,9 +385,9 @@ const Farms: React.FC = () => {
                 checked={stakedOnly}
                 defaultColor="input"
                 onChange={() => setStakedOnly(!stakedOnly)}
-                scale="md"
+                scale="sm"
               />
-              <Text> {t('Only My Liquidity')}</Text>
+              <Text style={{fontSize:isMobile?"smaller":"medium"}}> {t('Only My Liquidity')}</Text>
             </ToggleWrapper>          
           </FilterContainer>
         </ControlContainer>

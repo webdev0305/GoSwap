@@ -34,7 +34,7 @@ const FarmCard = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  p{
+  h2{
     display: flex;
     width: 50%;
     flex-direction: row;
@@ -69,7 +69,7 @@ const FarmCard = styled.div`
     height: 170px;
     flex-direction: column;
     justify-content: space-around;
-    p {
+    h2 {
       display: flex;
       justify-content: space-between;
       width: 100%;
@@ -96,7 +96,7 @@ const PoolCard = styled.div`
     }
     span.token1 {
       position: absolute;
-      height: 55px;
+      height: 40px;
       left: 0px;
       transform: translateY(-50%);
       top: 50%;
@@ -104,8 +104,31 @@ const PoolCard = styled.div`
     span.token2 {
       position: absolute;
       height: 30px;
-      left: 30px;
-      top: 30px;      
+      left: 20px;
+      top: 20px;      
+    }
+  }
+
+  h2{
+    display: flex;
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: end;
+  }
+  @media screen and (max-width: 576px) {
+    margin: 10px;
+    min-width: 300px;
+    height: 170px;
+    flex-direction: column;
+    justify-content: space-around;
+    h2 {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    span {
+      width: 100%;
     }
   }
 `
@@ -205,7 +228,7 @@ const FarmsPoolsRow = () => {
               Earn <span style={{ color: "#1EBF8D" }}>GO</span> + Fees in Farms
             </Heading>
             <Link href="/">
-              <Button variant="tertiary">
+              <Button variant="tertiary" >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20.764" height="20.238" viewBox="0 0 20.764 20.238">
                   <path d="M8.828,4,9.857,2.974a1.108,1.108,0,0,1,1.571,0l9.009,9a1.108,1.108,0,0,1,0,1.571l-9.009,9.009a1.108,1.108,0,0,1-1.571,0L8.828,21.53a1.113,1.113,0,0,1,.019-1.59l5.584-5.32H1.112A1.11,1.11,0,0,1,0,13.508V12.025a1.11,1.11,0,0,1,1.112-1.112H14.431L8.847,5.592A1.105,1.105,0,0,1,8.828,4Z" transform="translate(0 -2.647)" fill="#fff" />
                 </svg>
@@ -214,6 +237,7 @@ const FarmsPoolsRow = () => {
           </Flex>
           <Flex 
           flexDirection={isMobile ? "row" : "column"}
+          style={{overflowX: 'auto'}}
           >
             {topFarms.map((topFarm) => (
               <FarmCard key={topFarm?.token.address}>
@@ -234,7 +258,7 @@ const FarmsPoolsRow = () => {
                   </span>
                   {topFarm?.lpSymbol}
                 </h3>
-                <p>
+                <h2>
                   <Flex flexDirection="column">
                     <span style={{ marginBottom: "10px", fontSize: "larger" }}>
                       {t('APR')}
@@ -251,7 +275,7 @@ const FarmsPoolsRow = () => {
                     
                   </Flex>
                   <Button variant="primary">Start Farm</Button>
-                </p>
+                </h2>
                 
               </FarmCard>
             ))}
@@ -272,6 +296,7 @@ const FarmsPoolsRow = () => {
           </Flex>
           <Flex 
           flexDirection={isMobile ? "row" : "column"}
+          style={{overflowX: 'auto'}}
           >
             {topPools.map((topPool) => (
               <PoolCard key={topPool?.stakingToken.address}>
@@ -295,6 +320,7 @@ const FarmsPoolsRow = () => {
                     <span>Stake <span style={{ color: "#1EBF8D" }}>{topPool?.stakingToken.symbol}</span></span>
                   </Flex>
                 </span>
+                <h2>
                 <Flex flexDirection="column">
                   <span style={{ marginBottom: "10px" }}>
                     {t('APR')}
@@ -310,6 +336,7 @@ const FarmsPoolsRow = () => {
                   </Flex>
                 </Flex>
                 <Button variant="primary">Start Stake</Button>
+                </h2>
               </PoolCard>
             ))}
           </Flex>

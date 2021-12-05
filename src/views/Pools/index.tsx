@@ -5,7 +5,7 @@ import styled from 'styled-components'
 // import { formatUnits } from 'ethers/lib/utils'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Flex, Text, Toggle } from '@pancakeswap/uikit'
+import { Flex, Text, Toggle, useMatchBreakpoints } from '@pancakeswap/uikit'
 // import orderBy from 'lodash/orderBy'
 import partition from 'lodash/partition'
 import { useTranslation } from 'contexts/Localization'
@@ -46,9 +46,8 @@ const PoolControls = styled.div`
   width: 100%;
   align-items: center;
   position: relative;
-
+  flex-direction: row;
   justify-content: space-between;
-  flex-direction: column;
   margin-bottom: 32px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -194,19 +193,19 @@ const Pools: React.FC = () => {
   `
 
   // const tableLayout = <PoolsTable pools={chosenPools} account={account} userDataLoaded={userDataLoaded} />
-
+  const { isMobile } = useMatchBreakpoints()
   return (
     <>
-      <PageHeader background="#1F2533" borderRadius="0 0 100px 100px">
+      <PageHeader background="#1F2533" borderRadius={isMobile?"0":"0 0 100px 100px"}>
         <Hero />
       </PageHeader>
-      <Page>
+      <Page style={{paddingInline:isMobile?"0px":"10px"}}>
         <PoolControls>
           <PoolTabButtons hasStakeInFinishedPools={hasStakeInFinishedPools} />
           <FilterContainer>
             <ToggleWrapper>
-              <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="md" />
-              <Text> {t('Only My Liquidity')}</Text>
+              <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="sm" />
+              <Text style={{fontSize:isMobile?"smaller":"medium"}}> {t('Only My Liquidity')}</Text>
             </ToggleWrapper>
           </FilterContainer>
         </PoolControls>

@@ -34,49 +34,11 @@ interface FarmCardActionsProps {
 const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidityUrl, cakePrice, lpLabel }) => {
   const { t } = useTranslation()
   const { toastError } = useToast()
-  const [requestedApproval, setRequestedApproval] = useState(false)
   const { pid, lpAddresses } = farm
   const { allowance, tokenBalance, stakedBalance, earnings } = farm.userData || {}
   const lpAddress = getAddress(lpAddresses)
   const isApproved = account && allowance && allowance.isGreaterThan(0)
-  const dispatch = useAppDispatch()
-
   const lpContract = useERC20(lpAddress)
-
-  const { onApprove } = useApproveFarm(lpContract)
-
-  const handleApprove = useCallback(async () => {
-    try {
-      setRequestedApproval(true)
-      await onApprove()
-      dispatch(fetchFarmUserDataAsync({ account, pids: [pid] }))
-    } catch (e) {
-      toastError(t('Error'), t('Please try again. Confirm the transaction and make sure you are paying enough gas!'))
-      console.error(e)
-    } finally {
-      setRequestedApproval(false)
-    }
-  }, [onApprove, dispatch, account, pid, t, toastError])
-
-  const renderApprovalOrStakeButton = () => {
-    return isApproved ? (
-      <StakeAction
-        stakedBalance={stakedBalance}
-        tokenBalance={tokenBalance}
-        tokenName={farm.lpSymbol}
-        pid={pid}
-        apr={farm.apr}
-        lpLabel={lpLabel}
-        cakePrice={cakePrice}
-        addLiquidityUrl={addLiquidityUrl}
-        farm={farm}
-      />
-    ) : (
-      <ButtonMenuItem disabled={requestedApproval} onClick={handleApprove}>
-        {t('Approve')}
-      </ButtonMenuItem>
-    )
-  }
 
   return (
     <Action>
@@ -94,7 +56,18 @@ const CardActions: React.FC<FarmCardActionsProps> = ({ farm, account, addLiquidi
       </Flex>
       {!account ? <ConnectWalletButton mt="8px" width="100%" />:
         <ButtonMenu fullWidth activeIndex={0} scale="md" variant="subtle">
-          {renderApprovalOrStakeButton()}
+          <StakeAction
+            stakedBalance={stakedBalance}
+            tokenBalance={tokenBalance}
+            tokenName={farm.lpSymbol}
+            pid={pid}
+            apr={farm.apr}
+            lpLabel={lpLabel}
+            cakePrice={cakePrice}
+            addLiquidityUrl={addLiquidityUrl}
+            farm={farm}
+            isApproved={isApproved}
+          />
           <HarvestAction earnings={earnings} pid={pid} />
         </ButtonMenu>
       }

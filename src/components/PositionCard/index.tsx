@@ -10,6 +10,7 @@ import {
   Flex,
   CardProps,
   AddIcon,
+  useMatchBreakpoints
 } from '@pancakeswap/uikit'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -361,7 +362,7 @@ export function LiquidityDeposit({ pair }) {
   const { account } = useActiveWeb3React()
   // const currency0 = unwrappedToken(pair.token0)
   // const currency1 = unwrappedToken(pair.token1)
-
+  const { isMobile } = useMatchBreakpoints()
   const userPoolBalance = useTokenBalance(account ?? undefined, pair.liquidityToken)
   const totalPoolTokens = useTotalSupply(pair.liquidityToken)
 
@@ -377,10 +378,13 @@ export function LiquidityDeposit({ pair }) {
       : [undefined, undefined]
 
   return (
-    <Flex alignItems="center">
-      <Text fontSize="20px">{token0Deposited?.toSignificant(6)} <span style={{color:'#1EBF8D'}}>{pair?.token0?.symbol}</span></Text>
+    <Flex alignItems="left" flexDirection={isMobile?"column":"row"}>
+      <Text fontSize={isMobile?"12px":"20px"}>{token0Deposited?.toSignificant(3)} <span style={{color:'#1EBF8D'}}>{pair?.token0?.symbol}</span></Text>
+      {isMobile?<></>:
       <Text> / </Text>
-      <Text fontSize="20px">{token1Deposited?.toSignificant(6)} <span style={{color:'#1EBF8D'}}>{pair?.token1?.symbol}</span></Text>
+      }
+      <Text fontSize={isMobile?"12px":"20px"}>{token1Deposited?.toSignificant(3)} <span style={{color:'#1EBF8D'}}>{pair?.token1?.symbol}</span></Text>
     </Flex>
+    
   )
 }
